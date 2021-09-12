@@ -1,1 +1,31 @@
-<router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  <span>{{ title }}</span>
+</mat-toolbar>
+<app-endereco (addNewFavorite)="receiveNewFavorite($event)"></app-endereco>
+<section class="mat-card-margin">
+  <mat-card>
+    <mat-card-header color="warn">
+      <div mat-card-avatar class="example-header-image"><mat-icon>map</mat-icon></div>
+      <mat-card-title>Meus Favoritos !</mat-card-title> 
+    </mat-card-header>
+   
+    <mat-card-content>
+      <mat-accordion>
+
+        <mat-expansion-panel *ngFor="let favorito of favoritos" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon>check</mat-icon> <p> {{ favorito.cep }}</p>
+            </mat-panel-title>
+            <mat-panel-description>
+              This is a summary of the content
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>This is the primary content of the panel.</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<!-- <router-outlet></router-outlet> -->
