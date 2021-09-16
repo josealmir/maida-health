@@ -1,7 +1,7 @@
 default:
   image: node:latest
 
-stage:
+stages:
   - build_job 
 
 cache:
