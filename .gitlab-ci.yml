@@ -1,8 +1,8 @@
-stage:
-  - build_job 
-
 default:
   image: node:latest
+
+stage:
+  - build_job 
 
 cache:
   paths:
