@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { GeoCoordenadas } from '../models/geo-coordenadas';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +11,6 @@ export class GoogleMapsService {
   constructor(private http: HttpClient) { }
 
   public get(endereco: string): any {
-    return this.http.get<any>(`https://maps.googleapis.com/maps/api/geocode/json?address='${endereco}&key=${this.KEY_GOOGLE_MAPS}`);
+    return this.http.get<any>(`${environment.googlemaps}'${endereco}&key=${environment.googlemapskey}`);
   }
 }
