@@ -11,6 +11,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule }   from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -19,6 +20,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AgmCoreModule } from '@agm/core';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -30,20 +33,25 @@ import { MatExpansionModule } from '@angular/material/expansion';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    MatIconModule,
     MatTabsModule,
     MatCardModule,
     MatInputModule,
     MatTableModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatGridListModule,
+    MatBadgeModule,
     MatButtonModule,
+    MatTooltipModule,
     MatToolbarModule,
-    MatExpansionModule,
+    MatGridListModule,
     MatSnackBarModule,
+    MatExpansionModule,
     MatProgressBarModule,
+    BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    BrowserAnimationsModule
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBzwbD1WErqzCLa6J50nzkQoJqZCMfgscE'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

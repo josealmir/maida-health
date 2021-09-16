@@ -2,13 +2,18 @@
  
   <mat-card>
       <mat-progress-bar *ngIf="IsLoading" mode="indeterminate"></mat-progress-bar>
-      <mat-form-field appearance="fill">
-          <mat-label>CEP </mat-label>
-          <input matInput type="number" maxlength="8" placeholder="Ex. 6000000" [(ngModel)]="cep">
-          <mat-hint > {{ cep.toString().length }} / 8</mat-hint>
-      </mat-form-field>
-      <button mat-raised-button (click)="search()" color="primary" class="mat-card-margin"> Perquisar </button>
-
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+            <mat-label>CEP </mat-label>
+            <input matInput formControlName="cep" type="text" maxlength="8" placeholder="Ex. 6000000">
+            <mat-hint > {{ form.value.cep?.toString().length }} / 8 </mat-hint>
+            <mat-error *ngIf="f.cep.errors">
+               <span *ngIf="f.cep.errors.required"> CEP é obrigatório! </span> 
+               <span *ngIf="f.cep.errors.pattern"> CEP não é válido! </span> 
+            </mat-error>            
+        </mat-form-field>
+        <button mat-raised-button type="submit" color="primary" class="mat-card-margin"><mat-icon>search</mat-icon> Perquisar </button>
+      </form>
     <mat-card-content>
           <mat-form-field class="mat-input-card"  appearance="fill">
             <mat-label>Logradouro</mat-label>
@@ -30,7 +35,7 @@
             <input matInput disabled  placeholder="Placeholder" [(ngModel)]="endereco.uf">
           </mat-form-field>
 
-          <button mat-mini-fab *ngIf="endereco?.cep?.length" (click)="addToFavorite()" color="warn" aria-label="Add aos favoritos"  matTooltip="Add aos favoritos">
+          <button mat-mini-fab  *ngIf="endereco?.cep?.length" (click)="addToFavorite()" color="warn" aria-label="Add aos favoritos"  matTooltip="Add aos favoritos">
             <mat-icon>favorite</mat-icon>
           </button>  
     </mat-card-content>
