@@ -8,7 +8,7 @@ import { StorageService } from './services/storage.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit {
   public title: string;
   public panelOpenState: boolean;
   public favoritos: Endereco[];
@@ -19,10 +19,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.title = 'Diário de Bordo.';
     this.panelOpenState = false;
     this.favoritos = [];
-  }
-
-  ngOnDestroy(): void {
-    this.storegeService.deleteAll();
   }
 
   ngOnInit(): void {
@@ -47,4 +43,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.lat = endereco.latitute;
     this.lng = endereco.longitude;
   }
+
+  public deleteTodos(): void {
+    this.favoritos = []
+    this.storegeService.deleteAll(); 
+  }
+
 }
