@@ -12,7 +12,7 @@ build_job:
   stage: build_job
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_envet" &&  $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"'
-      when: manual
+      when: always
 
   script:
     - echo "Install Packages NPM ..."
