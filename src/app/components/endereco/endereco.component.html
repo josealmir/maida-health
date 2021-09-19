@@ -5,7 +5,7 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill">
             <mat-label>CEP </mat-label>
-            <input matInput formControlName="cep" type="text" placeholder="Ex. 6000000">
+            <input matInput formControlName="cep" type="text" placeholder="Ex. 6000000" [errorStateMatcher]="matcher">
             <mat-hint > {{ form.value.cep?.toString().length }} / 8 </mat-hint>
             <mat-error *ngIf="f.cep.errors">
                <span *ngIf="f.cep.errors.required"> CEP é obrigatório! </span> 
@@ -41,5 +41,3 @@
     </mat-card-content>
   </mat-card>
 </section>
-
-

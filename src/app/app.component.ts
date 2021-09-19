@@ -1,7 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Endereco } from './models/endereco';
 import { GoogleMapsService } from './services/google-maps.service';
 import { StorageService } from './services/storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogAlertComponent } from './components/dialog-alert/dialog-alert.component';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +11,16 @@ import { StorageService } from './services/storage.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  
   public title: string;
-  public panelOpenState: boolean;
   public favoritos: Endereco[];
   public lat: string;
   public lng: string;
 
-  constructor(private googleMapsService: GoogleMapsService, private storegeService: StorageService) {
+  constructor(private googleMapsService: GoogleMapsService, 
+    private storegeService: StorageService,
+    private matDialog :MatDialog) {
     this.title = 'Diário de Bordo.';
-    this.panelOpenState = false;
     this.favoritos = [];
   }
 
@@ -29,6 +32,13 @@ export class AppComponent implements OnInit {
   }
   
   public receiveNewFavorite(endereco: Endereco): void {
+
+    const cepExist = this.favoritos.some(s => s.cep === endereco.cep);
+    if (cepExist) {
+      this.matDialog.open(DialogAlertComponent);
+      return;
+    }
+
     this.googleMapsService.get(endereco.logradouro + ', ' + endereco.bairro + ', ' + endereco.localidade + ' - ' + endereco.uf)
     .subscribe( data => { 
       endereco.latitute = data.results[0].geometry.location.lat;

@@ -22,11 +22,14 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AgmCoreModule } from '@agm/core';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogAlertComponent } from './components/dialog-alert/dialog-alert.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EnderecoComponent,
+    DialogAlertComponent,
   ],
   imports: [
     FormsModule,
@@ -38,6 +41,7 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatTabsModule,
     MatCardModule,
     MatInputModule,
+    MatDialogModule,
     MatTableModule,
     MatBadgeModule,
     MatButtonModule,
