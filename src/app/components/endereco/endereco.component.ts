@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Endereco } from 'src/app/models/endereco';
 import { ViacepService } from 'src/app/services/via-cep.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 @Component({
   selector: 'app-endereco',
@@ -12,8 +13,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class EnderecoComponent implements OnInit {
 
   @Output() addNewFavorite: EventEmitter<Endereco>;
+  public matcher = new AppStateMatcher();   
 
   public form: FormGroup;
+  public submitted: boolean;
   public IsLoading: boolean;
   public endereco: Endereco;
   public horizontalPosition: MatSnackBarHorizontalPosition = 'right';
@@ -22,6 +25,7 @@ export class EnderecoComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, 
               private snackBarService: MatSnackBar, 
               private viacepService: ViacepService) {
+    this.submitted = false;
     this.IsLoading = false;
     this.endereco = new Endereco();
     this.addNewFavorite = new EventEmitter<Endereco>();
@@ -41,7 +45,9 @@ export class EnderecoComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    if (this.form.invalid){
+    this.submitted = true;
+    
+    if (this.form.invalid) {
       return;
     }
 
@@ -53,15 +59,15 @@ export class EnderecoComponent implements OnInit {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
         });
+        this.redefineForm();
+        this.submitted = false;
     }).catch((data)=>{
-      console.log(data);
       this.snackBarService.open("Erro ao processar a solicitação.","Cancelar", {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
       });;
     }).finally(()=> { 
       this.IsLoading = false; 
-      this.form.reset();
     });
   }
 
@@ -72,4 +78,18 @@ export class EnderecoComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
+  private redefineForm(): void { 
+    this.form.reset();
+    Object.keys(this.form.controls).forEach(key => {
+      this.form.get(key).setErrors(null) ;
+    });
+  }
+}
+
+export class AppStateMatcher implements ErrorStateMatcher {
+  
+  public isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || isSubmitted));
+  }
 }
